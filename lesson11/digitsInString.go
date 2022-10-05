@@ -9,9 +9,9 @@ import (
 func main() {
 	s := "a10 10 20b 20 30c30 30 dd"
 	s = strings.Trim(s, " ")
-	spaceIndex := strings.Index(s, " ")
 
-	for spaceIndex > 0 {
+	for strings.Contains(s, " ") {
+		spaceIndex := strings.Index(s, " ")
 		firstWorld := s[:spaceIndex]
 		i, err := strconv.Atoi(firstWorld)
 		if err == nil {
@@ -19,6 +19,9 @@ func main() {
 		}
 		s = s[spaceIndex+1:]
 		s = strings.Trim(s, " ")
-		spaceIndex = strings.Index(s, " ")
+	}
+	i, err := strconv.Atoi(s)
+	if err == nil {
+		fmt.Println(i)
 	}
 }
