@@ -4,23 +4,32 @@ import "fmt"
 
 const arrCount = 10
 
-func main() {
-	var data [arrCount]int
+var (
+	evenCount int
+	oddCount  int
+)
 
+func inputArray() (data [arrCount]int) {
 	for i := range data {
 		fmt.Printf("Введите %v элемент: ", i+1)
 		fmt.Scanln(&data[i])
 	}
+	return
+}
 
-	evenCount := 0
-	oddCount := 0
+func processElement(value int) {
+	if value%2 == 0 {
+		evenCount++
+	} else {
+		oddCount++
+	}
+}
+
+func main() {
+	data := inputArray()
 
 	for _, val := range data {
-		if val%2 == 0 {
-			evenCount++
-		} else {
-			oddCount++
-		}
+		processElement(val)
 	}
 
 	fmt.Println("Сумма четных чисел: ", evenCount)

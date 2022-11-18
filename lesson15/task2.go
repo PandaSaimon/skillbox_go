@@ -12,18 +12,15 @@ func inputArray() (data [arrCount]int) {
 	return
 }
 
-func reversePrint(data [arrCount]int) {
-	fmt.Print("[")
-	for i := arrCount - 1; i >= 0; i-- {
-		fmt.Print(data[i])
-		if i != 0 {
-			fmt.Print(" ")
-		}
+func reverseArray(data [arrCount]int) [arrCount]int {
+	for i := 0; i < arrCount/2; i++ {
+		data[i], data[arrCount-i-1] = data[arrCount-i-1], data[i]
 	}
-	fmt.Println("]")
+	return data
 }
 
 func main() {
 	data := inputArray()
-	reversePrint(data)
+	data = reverseArray(data)
+	fmt.Println(data)
 }
