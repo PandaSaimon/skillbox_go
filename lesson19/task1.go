@@ -21,12 +21,25 @@ func inputSecondArray() (data [secondLen]int) {
 }
 
 func concatArrays(data1 [firstLen]int, data2 [secondLen]int) (result [totalLen]int) {
-	for i, el := range data1 {
-		result[i] = el
+	i, j, k := 0, 0, 0
+	for ; i < firstLen && j < secondLen; k++ {
+		if data1[i] < data2[j] {
+			result[k] = data1[i]
+			i++
+		} else {
+			result[k] = data2[j]
+			j++
+		}
 	}
 
-	for i, el := range data2 {
-		result[i+firstLen] = el
+	for ; i < firstLen; i++ {
+		result[k] = data1[i]
+		k++
+	}
+
+	for ; j < secondLen; j++ {
+		result[k] = data2[j]
+		k++
 	}
 	return
 }
