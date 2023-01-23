@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -27,32 +26,28 @@ func readFile(fileName string) string {
 }
 
 func main() {
-	var fileName1, fileName2, fileNameResult string
-	flag.StringVar(&fileName1, "file1", defName, "input file1")
-	flag.StringVar(&fileName2, "file2", defName, "input file2")
-	flag.StringVar(&fileNameResult, "fileResult", defName, "input fileResult")
-	flag.Parse()
-
+	args := os.Args[1:]
 	result := ""
-	if fileName1 == defName {
+	if len(args) <= 0 {
 		log.Fatalln("No data input")
 		return
 	}
-	result = readFile(fileName1)
+	result = readFile(args[0])
 
-	if fileName2 != defName {
-		result = strings.Join([]string{result, readFile(fileName2)}, "\n")
-	}
+	if len(args) > 1 {
+		result = strings.Join([]string{result, readFile(args[1])}, "\n")
 
-	if fileNameResult != defName {
-		file, err := os.Create(fileNameResult)
-		if err != nil {
-			log.Fatalln(err)
-			return
+		if len(args) > 2 {
+			fileResultName := args[2]
+			file, err := os.Create(fileResultName)
+			if err != nil {
+				log.Fatalln(err)
+				return
+			}
+			defer file.Close()
+			file.WriteString(result)
+			log.Println("Результат сохранен в", fileResultName)
 		}
-		defer file.Close()
-		file.WriteString(result)
-		log.Println("Результат сохранен в", fileNameResult)
 	}
 
 	fmt.Println(result)
